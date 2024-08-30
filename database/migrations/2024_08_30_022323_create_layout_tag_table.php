@@ -15,7 +15,7 @@ return new class extends Migration
             $table->foreignId('layout_id')->constrained()->onDelete('cascade');
             $table->foreignId('tag_id')->constrained()->onDelete('cascade');
             // 外部キーを主キーとして設定
-            $table->primary(['post_id', 'tag_id']);
+            $table->primary(['layout_id', 'tag_id']);
             $table->timestamps();
         });
     }
