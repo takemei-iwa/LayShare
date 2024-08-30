@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::table('likes', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('layout_id')->constrained()->onDelete('cascade');
+            // 外部キーを主キーとして設定
+            $table->primary(['user_id', 'layout_id']);
         });
     }
 
