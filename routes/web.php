@@ -19,6 +19,7 @@ use App\Http\Controllers\LayoutController;
 */
 
 Route::get('/', [LayoutController::class, 'index'])->name('index');   
+Route::get('/layouts/create', [LayoutController::class, 'create'])->name('create');   
 
 //*****ここからデフォルトのルーティング*****/
 // Route::get('/', function () {

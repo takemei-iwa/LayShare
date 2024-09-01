@@ -12,4 +12,8 @@ class LayoutController extends Controller
     {
         return view('layouts.index');
     }
+    public function create()
+    {
+        return view('layouts.create');
+    }
 }

@@ -8,5 +8,6 @@
     </head>
         <body>
           <h1> layouts</h1>
+          <a href="/layouts/create">レイアウトの投稿</a>
         </body>
 </html>
