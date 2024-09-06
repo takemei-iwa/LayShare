@@ -63,9 +63,8 @@ class LayoutController extends Controller
         $htmlName = uniqid() . '.html';
         $cssName = uniqid() . '.css';
         
-        
-        Storage::disk('public')->put('images/' . $htmlName, $html);
-        Storage::disk('public')->put('images/' . $cssName, $css);
+        Storage::disk('public')->put('tmp/' . $htmlName, $html);
+        Storage::disk('public')->put('tmp/' . $cssName, $css);
 
         $dataURL = $request->input('image');
         $parts = explode(',', $dataURL);
@@ -82,10 +81,11 @@ class LayoutController extends Controller
         $imgName = uniqid() . '.png'; // PNGファイルとして保存
 
         // 画像をストレージに保存
-        Storage::disk('public')->put('images/' . $imgName, $data);
+        Storage::disk('public')->put('tmp/' . $imgName, $data);
 
         // 保存した画像のURLを取得
-        $imageUrl = Storage::url('images/' . $imgName);
+        $imageUrl = Storage::url('tmp/' . $imgName);
+
 
         // 画像のURLをレスポンスとして返す
         return response()->json(['url' => $imageUrl]);
