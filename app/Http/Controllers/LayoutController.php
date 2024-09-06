@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Models\Layout;
 
+use Cloudinary;
+
 class LayoutController extends Controller
 {   
     public function index()
@@ -17,6 +19,31 @@ class LayoutController extends Controller
     public function create()
     {
         return view('layouts.create');
+    }
+    private function uploadFile($fileName, $file, $storage_path){
+        Storage::disk('public')->put('tmp/' . $fileName, $file);
+        $uploadedFileUrl = Cloudinary::uploadFile($storage_path . '/' . $fileName)->getSecurePath();
+        return $uploadedFileUrl;
+    }
+    private function uploadImage($imageDataURL, $storage_path){
+        $parts = explode(',', $imageDataURL);
+        $data = isset($parts[1]) ? $parts[1] : null;
+
+        if ($data === null) {
+            return response()->json(['error' => 'No image data provided'], 400);
+        }
+
+        // Base64デコード
+        $data = base64_decode($data);
+
+        // ファイル名を生成
+        $imgName = uniqid() . '.png'; 
+
+        // 画像をストレージに保存
+        Storage::disk('public')->put('tmp/' . $imgName, $data);
+        $uploadedImageUrl = Cloudinary::upload($storage_path . '/' . $imgName)->getSecurePath();
+
+        return $uploadedImageUrl;
     }
     public function store(Request $request)
     {   
@@ -49,48 +76,37 @@ class LayoutController extends Controller
         // File::put($cssPath, $css);
         // return response()->json(['message' => 'request getted successfully']);
 
+        // 一時的に保存するディレクトリのパス
+        $storage_path = Storage::disk('public')->path('tmp');
         // フォームからのデータを取得
         $html = $request->input('html');
-        if ($html === null) {
-            $html = "";
+        $uploadedHtmlUrl = "";
+        if ($html !== null) {
+            $htmlName = uniqid() . '.html';
+            $uploadedHtmlUrl = $this->uploadFile($htmlName, $html, $storage_path);
         }
+
         $css = $request->input('css');
-        if ($css === null) {
-            $css = "";
+        $uploadedCssUrl = "";
+        if ($css !== null) {
+            $cssName = uniqid() . '.css';
+            $cssURL = $this->uploadFile($cssName, $css, $storage_path);
         }
+        $imageDataUrl = $request->input('image');
+        $uploadedImageUrl = $this->uploadImage($imageDataUrl, $storage_path);
         
+        // URLからダウンロードできるか確認
+        // $htmlGot = file_get_contents($uploadedHtmlUrl);
+        // dd($htmlGot);
+        // dd($uploadedHtmlUrl . '\n' . 
+        //     $uploadedCssUrl . '\n' . 
+        //     $uploadedImageUrl);
 
-        $htmlName = uniqid() . '.html';
-        $cssName = uniqid() . '.css';
-        
-        Storage::disk('public')->put('tmp/' . $htmlName, $html);
-        Storage::disk('public')->put('tmp/' . $cssName, $css);
-
-        $dataURL = $request->input('image');
-        $parts = explode(',', $dataURL);
-        $data = isset($parts[1]) ? $parts[1] : null;
-
-        if ($data === null) {
-            return response()->json(['error' => 'No image data provided'], 400);
-        }
-
-        // Base64デコード
-        $data = base64_decode($data);
-
-        // ファイル名を生成
-        $imgName = uniqid() . '.png'; // PNGファイルとして保存
-
-        // 画像をストレージに保存
-        Storage::disk('public')->put('tmp/' . $imgName, $data);
-
-        // 保存した画像のURLを取得
-        $imageUrl = Storage::url('tmp/' . $imgName);
-
-
-        // 画像のURLをレスポンスとして返す
-        return response()->json(['url' => $imageUrl]);
-        // データを使って何かをする
-        // ここでは、受信したデータを表示するだけです
-        return "受信したメッセージ: " . htmlspecialchars($image) . " " . htmlspecialchars($css);
+        // uploadしたurlを返す
+        return response()->json([
+            'html' => $uploadedHtmlUrl,
+            'css' => $uploadedCssUrl,
+            'image' => $uploadedImageUrl
+        ]);
     }
 }
