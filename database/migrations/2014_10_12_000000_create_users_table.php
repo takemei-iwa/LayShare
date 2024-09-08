@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('profile');
-            $table->string('icon');
+            $table->string('profile')->default('');
+            $table->string('icon')->default('https://res.cloudinary.com/dq4ijqkpb/image/upload/v1725763832/default_icon_jlh84e.png');
             $table->rememberToken();
             $table->timestamps();
         });
