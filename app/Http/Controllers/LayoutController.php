@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Layout;
 
@@ -45,7 +46,7 @@ class LayoutController extends Controller
 
         return $uploadedImageUrl;
     }
-    public function store(Request $request)
+    public function store(Request $request, Layout $layout)
     {   
         // $input = $request['layout'];
         // dump($input);
@@ -103,10 +104,13 @@ class LayoutController extends Controller
         //     $uploadedImageUrl);
 
         // uploadしたurlを返す
-        return response()->json([
+        $input = [
             'html' => $uploadedHtmlUrl,
             'css' => $uploadedCssUrl,
-            'image' => $uploadedImageUrl
-        ]);
+            'thumbnail' => $uploadedImageUrl,
+            'user_id' => Auth::user()->id,
+        ];
+        $layout->fill($input)->save();
+        return response()->json($input);
     }
 }

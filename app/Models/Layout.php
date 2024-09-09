@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Layout extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'html',
+        'css',
+        'thumbnail',
+        'user_id',
+    ];
 }
