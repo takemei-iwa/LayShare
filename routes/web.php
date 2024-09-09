@@ -17,20 +17,20 @@ use App\Http\Controllers\LayoutController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', function () {
+  return Inertia::render('Welcome', [
+      'canLogin' => Route::has('login'),
+      'canRegister' => Route::has('register'),
+      'laravelVersion' => Application::VERSION,
+      'phpVersion' => PHP_VERSION,
+  ]);
+});
 
-Route::get('/', [LayoutController::class, 'index'])->name('index');   
+Route::get('/layouts', [LayoutController::class, 'index'])->name('index');   
 Route::get('/layouts/create', [LayoutController::class, 'create'])->name('create');   
 Route::post('/layouts/create', [LayoutController::class, 'store'])->name('layouts.store');
 
 //*****ここからデフォルトのルーティング*****/
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
 
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');

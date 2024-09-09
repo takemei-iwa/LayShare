@@ -19,7 +19,7 @@
             <iframe id="preview" style="width: 100%; height: 300px; border: 1px solid #ccc;"></iframe>
 
             <div class="footer">
-                <a href="/">戻る</a>
+                <a href="/layouts">戻る</a>
             </div>
         </body>    
 </html>

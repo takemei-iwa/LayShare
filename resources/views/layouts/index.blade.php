@@ -8,6 +8,9 @@
     </head>
         <body>
           <h1> layouts</h1>
+          @if (!is_null(Auth::user()))
+              <p>{{ Auth::user()->name }}</p>
+          @endif
           <a href="/layouts/create">レイアウトの投稿</a>
         </body>
 </html>
