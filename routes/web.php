@@ -28,9 +28,7 @@ Route::get('/', function () {
 
 // Route::get('/layouts', [LayoutController::class, 'index'])->name('index');   
 Route::get('/layouts', [LayoutController::class, 'index'])->name('index');
-Route::get('/layouts/create', function () {
-  return Inertia::render('Layouts/Create');
-})->name('create');   
+Route::get('/layouts/create', [LayoutController::class, 'create'])->name('create');   
 Route::post('/layouts/create', [LayoutController::class, 'store'])->name('layouts.store');
 
 //*****ここからデフォルトのルーティング*****/

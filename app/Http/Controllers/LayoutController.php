@@ -20,7 +20,7 @@ class LayoutController extends Controller
     }
     public function create()
     {
-        return view('layouts.create');
+        return Inertia::render('Layouts/Create');
     }
     private function uploadFile($fileName, $file, $storage_path){
         Storage::disk('public')->put('tmp/' . $fileName, $file);
