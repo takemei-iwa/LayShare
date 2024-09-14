@@ -49,35 +49,6 @@ class LayoutController extends Controller
     }
     public function store(Request $request, Layout $layout)
     {   
-        // $input = $request['layout'];
-        // dump($input);
-        // // $imageData = $input["img"];
-        // $imageData = str_replace('data:image/png;base64,', '', $imageData);
-        // $imageData = str_replace(' ', '+', $imageData);
-        // $image = base64_decode($imageData);
-
-        // $imagePath = public_path('test_files/' . uniqid() . '.png');
-        // $htmlPath = public_path('test_files/' . uniqid() . '.html');
-        // $cssPath = public_path('test_files/' . uniqid() . '.css');        
-        
-        // // ディレクトリが存在しない場合は作成
-        // $directory = dirname($imagePath);
-        // if (!File::exists($directory)) {
-        //     File::makeDirectory($directory, 0755, true);
-        // }
-
-        // $html =  $request->input('html');
-        // $css =  $request->input('css');
-
-        // dump($html);
-        // dump($css);
-        // dump($imageData == null);
-
-        // File::put($imagePath, $image);
-        // File::put($htmlPath, $html);
-        // File::put($cssPath, $css);
-        // return response()->json(['message' => 'request getted successfully']);
-
         // 一時的に保存するディレクトリのパス
         $storage_path = Storage::disk('public')->path('tmp');
         // フォームからのデータを取得
