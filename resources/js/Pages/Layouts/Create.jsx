@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link, useForm } from '@inertiajs/react';
 import html2canvas from 'html2canvas';
 import { router } from '@inertiajs/react'
+import Authenticated from "@/Layouts/AuthenticatedLayout";
 
-export default function Create() {
+export default function Create(props) {
     const [html, setHtml] = useState('');
     const [css, setCss  ] = useState('');
 
@@ -84,7 +85,11 @@ export default function Create() {
         
     }
     return (
-        <div>    
+        <Authenticated user={props.auth.user} header={
+            <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                Create
+            </h2>
+        }>
             {/* <form id="form" action="{{ route('layouts.store') }}" method="POST"> */}
             <form onSubmit={handleSendPosts}>                
                 <input type="text" name="image" id="image" value="imagedesu"/>
@@ -104,7 +109,7 @@ export default function Create() {
             <div class="footer">
                 <Link href="/layouts">戻る</Link>
             </div>
-        </div>
+        </Authenticated>
     );
 }
 
