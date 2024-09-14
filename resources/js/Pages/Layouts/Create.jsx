@@ -1,10 +1,20 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link } from '@inertiajs/react';
+import { Link, useForm } from '@inertiajs/react';
 import html2canvas from 'html2canvas';
+import { router } from '@inertiajs/react'
 
 export default function Create() {
     const [html, setHtml] = useState('');
     const [css, setCss  ] = useState('');
+
+    // const {data, setData, post} = useForm({  
+    //     image: "",
+    //     html: "",
+    //     css: ""
+    // })
+
+    const metaCsrfToken = document.querySelector("meta[name='csrf-token']");
+    const csrfToken = useRef(metaCsrfToken.content);
 
     const iframeRef = useRef(null);
 
@@ -33,10 +43,15 @@ export default function Create() {
                       <style>${css}</style>
                       ${html}
                   `);
+            // iframeDoc.write(`
+            //     <style>${data.css}</style>
+            //     ${data.html}
+            // `);
             iframeDoc.close();
             }
         );
     }, [html, css]);
+    // }, [data.html, data.css]);
       
     // 送信用関数を追加
     const handleSendPosts = (e) => {
@@ -48,19 +63,20 @@ export default function Create() {
             html2canvas(iframeDoc.body).then(function (canvas) {
                 const img = canvas.toDataURL('image/png');
                 imageUrl = img;
-                const formData = {
+                const data = {
                     image: imageUrl, 
                     html: html,
                     css: css,                
                 }
-                fetch('/layouts/create', {
-                    method: 'POST', // HTTPメソッドを指定
-                    headers: {
-                        'Content-Type': 'application/json', // リクエストの内容タイプを指定
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    },
-                    body: formData // 送信するデータをJSON形式に変換
-                  })
+                router.post("/layouts/create", data);
+                // fetch('/layouts/create', {
+                //     method: 'POST', // HTTPメソッドを指定
+                //     headers: {
+                //         'Content-Type': 'application/json', // リクエストの内容タイプを指定
+                //         'X-CSRF-TOKEN': csrfToken.current,
+                //     },
+                //     body: formData // 送信するデータをJSON形式に変換
+                //   })
             }).catch(function (error) {
                 console.error('Error capturing the screenshot:', error);
             });
