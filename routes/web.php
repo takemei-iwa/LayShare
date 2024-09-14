@@ -5,6 +5,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+use App\Http\Controllers\LayoutController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,15 +17,21 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+  return Inertia::render('Welcome', [
+      'canLogin' => Route::has('login'),
+      'canRegister' => Route::has('register'),
+      'laravelVersion' => Application::VERSION,
+      'phpVersion' => PHP_VERSION,
+  ]);
 });
+
+// Route::get('/layouts', [LayoutController::class, 'index'])->name('index');   
+Route::get('/layouts', [LayoutController::class, 'index'])->name('index');
+Route::get('/layouts/create', [LayoutController::class, 'create'])->name('create');   
+Route::post('/layouts/create', [LayoutController::class, 'store'])->name('layouts.store');
+
+//*****ここからデフォルトのルーティング*****/
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
