@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 use App\Models\Layout;
 
@@ -15,7 +16,7 @@ class LayoutController extends Controller
 {   
     public function index()
     {
-        return view('layouts.index');
+        return Inertia::render('Layouts/Index');
     }
     public function create()
     {
