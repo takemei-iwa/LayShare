@@ -14,9 +14,9 @@ use Cloudinary;
 
 class LayoutController extends Controller
 {   
-    public function index()
+    public function index(Layout $layout)
     {
-        return Inertia::render('Layouts/Index');
+        return Inertia::render('Layouts/Index', ["layouts" => $layout->get()]);
     }
     public function create()
     {
