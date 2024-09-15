@@ -81,11 +81,8 @@ export default function Create(props) {
                 </div>
                 <button type="submit">投稿</button>                
             </form>
-            <iframe id="preview" ref={iframeRef}></iframe>
-        
-            <div class="footer">
-                <Link href="/layouts">戻る</Link>
-            </div>
+            <Link href="/layouts">戻る</Link>
+            <iframe id="preview" class="w-full h-screen" ref={iframeRef}></iframe>
         </Authenticated>
     );
 }
