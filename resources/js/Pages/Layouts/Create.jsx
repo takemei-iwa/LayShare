@@ -4,6 +4,8 @@ import html2canvas from 'html2canvas';
 import { router } from '@inertiajs/react'
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 
+import Editor from "../../Components/Layouts/Editor";
+
 export default function Create(props) {
     const [html, setHtml] = useState('');
     const [css, setCss  ] = useState('');
@@ -70,15 +72,7 @@ export default function Create(props) {
         }>
             <form onSubmit={handleSendPosts}>                
                 <input type="text" name="image" id="image" value="imagedesu"/>
-                <div>
-                    <textarea id="html-editor" name="html" 
-                    placeholder="Enter HTML here..." 
-                    onChange={(e) => setHtml(e.target.value) }>
-                    </textarea>
-                    <textarea id="css-editor" name="css" 
-                    placeholder="Enter CSS here..." 
-                    onChange={(e) => setCss(e.target.value)}></textarea>
-                </div>
+                <Editor html={html} css={css} onHtmlChange={setHtml} onCssChange={setCss} />
                 <button type="submit">投稿</button>                
             </form>
             <Link href="/layouts">戻る</Link>
