@@ -22,6 +22,18 @@ class LayoutController extends Controller
     {
         return Inertia::render('Layouts/Create');
     }
+    public function edit(Layout $layout)
+    {   
+        if($layout->html !== ""){
+            $layout->html = file_get_contents($layout->html);
+        }
+        if($layout->css !== ""){
+            $layout->css = file_get_contents($layout->css);
+        }
+        
+        
+        return Inertia::render('Layouts/Edit', ["layout" => $layout]);
+    }
     private function uploadFile($fileName, $file, $storage_path){
         Storage::disk('public')->put('tmp/' . $fileName, $file);
         $uploadedFileUrl = Cloudinary::uploadFile($storage_path . '/' . $fileName)->getSecurePath();
