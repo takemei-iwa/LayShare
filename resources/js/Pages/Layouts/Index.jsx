@@ -1,21 +1,39 @@
-import React, { useState } from "react";
+import React, { Children, useState } from "react";
 import { Link } from '@inertiajs/react';
 import Authenticated from "@/Layouts/AuthenticatedLayout";
+import Guest from "@/Layouts/GuestLayout";
 import { router } from '@inertiajs/react'
 
+function PageLayout( { user, children }) {
+    console.log(user);
+    const isLoggedIn = user !== null;
+    if (isLoggedIn) {
+        return(
+            <Authenticated user={user} header={
+                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                    Layouts
+                </h2>
+            }>
+                {children}
+            </Authenticated>
+        );
+    } else{
+        return(
+            <div>
+                {children}
+            </div>
+        );
+    }
+}
 export default function Index(props) {
     const { layouts } = props;
     console.log(layouts);
-    console.log(props);
+    console.log("Index props : ",props.auth.user);
+    const isLoggedIn = props.auth.user !== null;
     const { d, setD } = useState(layouts[0].thumbnail);
 
     return (
-        <Authenticated user={props.auth.user} header={
-            <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                Layouts
-            </h2>
-        }>
-
+        <PageLayout user={props.auth.user}>
             <h1> layouts</h1>
             <p>{layouts[0].id}</p> 
             <div class="grid grid-cols-3 gap-2">
@@ -31,6 +49,6 @@ export default function Index(props) {
             </div>
             
             <Link href="/layouts/create">レイアウトの投稿</Link>
-        </Authenticated>
+        </PageLayout>
     );
 }
