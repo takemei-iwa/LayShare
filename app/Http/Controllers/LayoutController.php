@@ -30,8 +30,6 @@ class LayoutController extends Controller
         if($layout->css !== ""){
             $layout->css = file_get_contents($layout->css);
         }
-        
-        
         return Inertia::render('Layouts/Edit', ["layout" => $layout]);
     }
     private function uploadFile($fileName, $file, $storage_path){
@@ -75,18 +73,11 @@ class LayoutController extends Controller
         $uploadedCssUrl = "";
         if ($css !== null) {
             $cssName = uniqid() . '.css';
-            $cssURL = $this->uploadFile($cssName, $css, $storage_path);
+            $uploadedCssUrl = $this->uploadFile($cssName, $css, $storage_path);
         }
         $imageDataUrl = $request->input('image');
         $uploadedImageUrl = $this->uploadImage($imageDataUrl, $storage_path);
         
-        // URLからダウンロードできるか確認
-        // $htmlGot = file_get_contents($uploadedHtmlUrl);
-        // dd($htmlGot);
-        // dd($uploadedHtmlUrl . '\n' . 
-        //     $uploadedCssUrl . '\n' . 
-        //     $uploadedImageUrl);
-
         // uploadしたurlを返す
         $input = [
             'html' => $uploadedHtmlUrl,
