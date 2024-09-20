@@ -1,7 +1,6 @@
 import React, { Children, useState } from "react";
 import { Link } from '@inertiajs/react';
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import Guest from "@/Layouts/GuestLayout";
 import { router } from '@inertiajs/react'
 
 function PageLayout( { user, children }) {
@@ -9,11 +8,7 @@ function PageLayout( { user, children }) {
     const isLoggedIn = user !== null;
     if (isLoggedIn) {
         return(
-            <Authenticated user={user} header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Layouts
-                </h2>
-            }>
+            <Authenticated user={user}>
                 {children}
             </Authenticated>
         );
