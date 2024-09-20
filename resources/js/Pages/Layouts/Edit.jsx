@@ -8,6 +8,7 @@ import Preview from "../../Components/Layouts/Preview";
 
 export default function Edit(props) {
     const { layout } = props;
+    const isOwner = props.auth.user.id === layout.user_id;
     const [html, setHtml] = useState(layout.html);
     const [css, setCss  ] = useState(layout.css);
     const [iframeDoc, setIframeDoc  ] = useState('');
@@ -25,7 +26,11 @@ export default function Edit(props) {
                 html: html,
                 css: css,                
             }
-            router.post("/layouts/create", data);
+            if(isOwner) {
+                router.put(`/layouts/${layout.id}`, data)
+            } else {
+                router.post("/layouts/create", data);
+            }
         })        
     }
     return (

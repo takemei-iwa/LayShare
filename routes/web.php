@@ -31,6 +31,7 @@ Route::get('/layouts', [LayoutController::class, 'index'])->name('index');
 Route::get('/layouts/create', [LayoutController::class, 'create'])->name('create');   
 Route::post('/layouts/create', [LayoutController::class, 'store'])->name('layouts.store');
 Route::get('/layouts/{layout}', [LayoutController::class, 'edit'])->name('layouts.edit');
+Route::put('/layouts/{layout}', [LayoutController::class, 'store'])->name('layouts.update');
 
 //*****ここからデフォルトのルーティング*****/
 
