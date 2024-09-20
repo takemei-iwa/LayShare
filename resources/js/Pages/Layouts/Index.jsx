@@ -1,32 +1,12 @@
-import React, { Children, useState } from "react";
+import React, { useState } from "react";
 import { Link } from '@inertiajs/react';
-import Authenticated from "@/Layouts/AuthenticatedLayout";
-import GuestLayout from "@/Layouts/GuestLayout";
-import { router } from '@inertiajs/react'
+import { router } from '@inertiajs/react';
+import MainLayout from "@/Layouts/MainLayout";
 
-function MainLayout( { user, children }) {
-    console.log(user);
-    const isLoggedIn = user !== null;
-    if (isLoggedIn) {
-        return(
-            <Authenticated user={user}>
-                {children}
-            </Authenticated>
-        );
-    } else{
-        return(
-            <GuestLayout>
-                {children}
-            </GuestLayout>
-        );
-    }
-}
 export default function Index(props) {
     const { layouts } = props;
     console.log(layouts);
     console.log("Index props : ",props.auth.user);
-    const isLoggedIn = props.auth.user !== null;
-    const { d, setD } = useState(layouts[0].thumbnail);
 
     return (
         <MainLayout user={props.auth.user}>

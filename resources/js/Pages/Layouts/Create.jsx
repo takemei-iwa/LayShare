@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { router } from '@inertiajs/react'
-import Authenticated from "@/Layouts/AuthenticatedLayout";
+import MainLayout from "@/Layouts/MainLayout";
 
 import Editor from "../../Components/Layouts/Editor";
 import Preview from "../../Components/Layouts/Preview";
@@ -21,17 +21,13 @@ export default function Create(props) {
         
     }
     return (
-        <Authenticated user={props.auth.user} header={
-            <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                Create
-            </h2>
-        }>
+        <MainLayout user={props.auth.user}>
             <button type="submit" onClick={handleSendPosts}>保存</button>                            
             <Editor html={html} css={css} 
                 onHtmlChange={setHtml} onCssChange={setCss} />            
             <Preview html={html} css={css}
                 onImageChange={setIframeDoc} />
-        </Authenticated>
+        </MainLayout>
     );
 }
 
