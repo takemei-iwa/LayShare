@@ -1,9 +1,10 @@
 import React, { Children, useState } from "react";
 import { Link } from '@inertiajs/react';
 import Authenticated from "@/Layouts/AuthenticatedLayout";
+import GuestLayout from "@/Layouts/GuestLayout";
 import { router } from '@inertiajs/react'
 
-function PageLayout( { user, children }) {
+function MainLayout( { user, children }) {
     console.log(user);
     const isLoggedIn = user !== null;
     if (isLoggedIn) {
@@ -14,9 +15,9 @@ function PageLayout( { user, children }) {
         );
     } else{
         return(
-            <div>
+            <GuestLayout>
                 {children}
-            </div>
+            </GuestLayout>
         );
     }
 }
@@ -28,7 +29,7 @@ export default function Index(props) {
     const { d, setD } = useState(layouts[0].thumbnail);
 
     return (
-        <PageLayout user={props.auth.user}>
+        <MainLayout user={props.auth.user}>
             <h1> layouts</h1>
             <p>{layouts[0].id}</p> 
             <div class="grid grid-cols-3 gap-2">
@@ -44,6 +45,6 @@ export default function Index(props) {
             </div>
             
             <Link href="/layouts/create">レイアウトの投稿</Link>
-        </PageLayout>
+        </MainLayout>
     );
 }
