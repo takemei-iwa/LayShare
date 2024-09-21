@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import html2canvas from 'html2canvas';
 import { router } from '@inertiajs/react'
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 
 import Editor from "../../Components/Layouts/Editor";
 import Preview from "../../Components/Layouts/Preview";
+import handleLayoutSave from "@/Functions/Layouts/handleLayoutSave";
 
 export default function Edit(props) {
     const { layout } = props;
@@ -14,24 +14,14 @@ export default function Edit(props) {
     const [iframeDoc, setIframeDoc  ] = useState('');
         
     // 送信用関数を追加
-    const handleSendPosts = (e) => {
+    const handleSendPosts = async (e) => {
         e.preventDefault(); 
-        let imageUrl = "";
-        // Make sure the iframe's content is fully loaded before capturing
-        html2canvas(iframeDoc.body).then(function (canvas) {
-            const img = canvas.toDataURL('image/png');
-            imageUrl = img;
-            const data = {
-                image: imageUrl, 
-                html: html,
-                css: css,                
-            }
-            if(isOwner) {
-                router.put(`/layouts/${layout.id}`, data)
-            } else {
-                router.post("/layouts/create", data);
-            }
-        })        
+        const data = await handleLayoutSave(iframeDoc.body, html, css);
+        if(isOwner) {
+            router.put(`/layouts/${layout.id}`, data)
+        } else {
+            router.post("/layouts/create", data);
+        }                
     }
     return (
         <Authenticated user={props.auth.user} header={
