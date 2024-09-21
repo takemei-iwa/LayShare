@@ -4,7 +4,7 @@ import MainLayout from "@/Layouts/MainLayout";
 
 import Editor from "../../Components/Layouts/Editor";
 import Preview from "../../Components/Layouts/Preview";
-import handleLayoutSave from "@/Functions/Layouts/handleLayoutSave";
+import handleLayoutSave, { handleGuest } from "@/Functions/Layouts/handleLayoutSave";
 
 export default function Edit(props) {
     const { layout } = props;
@@ -16,6 +16,9 @@ export default function Edit(props) {
     // 送信用関数を追加
     const handleSendPosts = async (e) => {
         e.preventDefault(); 
+        if (handleGuest(props.auth.user)) {
+            return;
+        }
         const data = await handleLayoutSave(iframeDoc.body, html, css);
         if(isOwner) {
             router.put(`/layouts/${layout.id}`, data)
