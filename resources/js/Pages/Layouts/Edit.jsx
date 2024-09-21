@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { router } from '@inertiajs/react'
-import Authenticated from "@/Layouts/AuthenticatedLayout";
+import MainLayout from "@/Layouts/MainLayout";
 
 import Editor from "../../Components/Layouts/Editor";
 import Preview from "../../Components/Layouts/Preview";
-import handleLayoutSave from "@/Functions/Layouts/handleLayoutSave";
+import handleLayoutSave, { handleGuest } from "@/Functions/Layouts/handleLayoutSave";
 
 export default function Edit(props) {
     const { layout } = props;
-    const isOwner = props.auth.user.id === layout.user_id;
+    const isOwner = props.auth.user && props.auth.user.id === layout.user_id;
     const [html, setHtml] = useState(layout.html);
     const [css, setCss  ] = useState(layout.css);
     const [iframeDoc, setIframeDoc  ] = useState('');
@@ -16,6 +16,9 @@ export default function Edit(props) {
     // 送信用関数を追加
     const handleSendPosts = async (e) => {
         e.preventDefault(); 
+        if (handleGuest(props.auth.user)) {
+            return;
+        }
         const data = await handleLayoutSave(iframeDoc.body, html, css);
         if(isOwner) {
             router.put(`/layouts/${layout.id}`, data)
@@ -24,17 +27,13 @@ export default function Edit(props) {
         }                
     }
     return (
-        <Authenticated user={props.auth.user} header={
-            <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                Edit
-            </h2>
-        }>
+        <MainLayout user={props.auth.user}>
             <button type="submit" onClick={handleSendPosts}>保存</button>                            
             <Editor html={html} css={css} 
                 onHtmlChange={setHtml} onCssChange={setCss} />            
             <Preview html={html} css={css}
                 onImageChange={setIframeDoc} />
-        </Authenticated>
+        </MainLayout>
     );
 }
 

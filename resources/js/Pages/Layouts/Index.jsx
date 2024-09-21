@@ -1,21 +1,15 @@
 import React, { useState } from "react";
 import { Link } from '@inertiajs/react';
-import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { router } from '@inertiajs/react'
+import { router } from '@inertiajs/react';
+import MainLayout from "@/Layouts/MainLayout";
 
 export default function Index(props) {
     const { layouts } = props;
     console.log(layouts);
-    console.log(props);
-    const { d, setD } = useState(layouts[0].thumbnail);
+    console.log("Index props : ",props.auth.user);
 
     return (
-        <Authenticated user={props.auth.user} header={
-            <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                Layouts
-            </h2>
-        }>
-
+        <MainLayout user={props.auth.user}>
             <h1> layouts</h1>
             <p>{layouts[0].id}</p> 
             <div class="grid grid-cols-3 gap-2">
@@ -31,6 +25,6 @@ export default function Index(props) {
             </div>
             
             <Link href="/layouts/create">レイアウトの投稿</Link>
-        </Authenticated>
+        </MainLayout>
     );
 }
