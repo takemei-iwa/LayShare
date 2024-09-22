@@ -32,7 +32,9 @@ Route::put('/layouts/{layout}', [LayoutController::class, 'store']
     )->name('layout.update')->middleware('auth');
     
 Route::post('/layouts/{layout}/like', [LikeController::class, 'store']
-    )->middleware('auth');    
+    )->middleware('auth');
+Route::delete('/layouts/{layout}/like', [LikeController::class, 'destroy']
+    )->middleware('auth');
 
 //*****ここからデフォルトのルーティング*****/
 

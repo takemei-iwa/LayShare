@@ -31,17 +31,4 @@ class Like extends Model
             ['layout_id', '=', $layout->id],
         ])->exists();
     }
-    public static function store(Layout $layout) {
-        $input = [
-            'user_id' => Auth::user()->id,
-            'layout_id' => $layout->id,
-        ];        
-        $this->fill($input)->save();
-    }
-    // public function destroy(Layout $layout) {
-    //     $this->where([
-    //         ['user_id', '=', Auth::user()->id],
-    //         ['layout_id', '=', $layout->id],
-    //     ])->delete();
-    // }
 }

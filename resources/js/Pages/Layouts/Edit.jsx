@@ -25,10 +25,14 @@ export default function Edit(props) {
         }                
     }
 
-    const handleSendLike = () => {
+    const handleSendLike = (e) => {
+        e.preventDefault(); 
         if(like){
+            router.delete(`/layouts/${layout.id}/like`);
+        } else {
             router.post(`/layouts/${layout.id}/like`);
         }
+        router.get(`/layouts/${layout.id}`);
     }
     return (
         <MainLayout user={props.auth.user}>
