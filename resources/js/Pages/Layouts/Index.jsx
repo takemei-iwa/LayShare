@@ -16,7 +16,7 @@ export default function Index(props) {
             { layouts.map((layout) => (     
                     <div key={layout.id}>
                         <div class="w-full aspect-w-9 aspect-h-5 overflow-hidden">
-                        <img class="object-cover w-full h-full object-left-top" alt=""
+                        <img class="object-cover w-full h-auto object-left-top" alt=""
                             src = {layout.thumbnail} 
                             onClick = {() => router.get(`/layouts/${layout.id}`) }/>
                             </div>

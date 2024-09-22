@@ -15,6 +15,8 @@ import React, { useRef, useEffect } from "react";
     }, [html, css]);
 
 	return (
-        <iframe id="preview" class="w-full h-screen" ref={iframeRef}></iframe>
+    <div class="w-full aspect-w-9 aspect-h-5">
+        <iframe id="preview" class="w-full h-full" ref={iframeRef}></iframe>
+    </div>
 	);
 }
