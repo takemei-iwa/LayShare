@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 use App\Models\Layout;
+use App\Models\Like;
 
 use Cloudinary;
 
@@ -24,13 +25,17 @@ class LayoutController extends Controller
     }
     public function edit(Layout $layout)
     {   
-        if($layout->html !== ""){
-            $layout->html = file_get_contents($layout->html);
+        $layoutData = $layout;
+        if($layoutData->html !== ""){
+            $layoutData->html = file_get_contents($layout->html);
         }
-        if($layout->css !== ""){
-            $layout->css = file_get_contents($layout->css);
+        if($layoutData->css !== ""){
+            $layoutData->css = file_get_contents($layout->css);
         }
-        return Inertia::render('Layouts/Edit', ["layout" => $layout]);
+        return Inertia::render('Layouts/Edit', [
+            "layout" => $layoutData,
+            "isLiked" => Like::isLiked($layout),
+        ]);
     }
     private function uploadFile($fileName, $file, $storage_path){
         Storage::disk('public')->put('tmp/' . $fileName, $file);

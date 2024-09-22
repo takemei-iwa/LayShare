@@ -7,12 +7,13 @@ import Preview from "../../Components/Layouts/Preview";
 import handleLayoutSave, { handleGuest } from "@/Functions/Layouts/handleLayoutSave";
 
 export default function Edit(props) {
-    const { layout } = props;
+    const { layout, isLiked } = props;
     const isOwner = props.auth.user && props.auth.user.id === layout.user_id;
     const [html, setHtml] = useState(layout.html);
     const [css, setCss  ] = useState(layout.css);
     const [iframeDoc, setIframeDoc  ] = useState('');
-        
+    const [like, setLike  ] = useState(isLiked);
+    
     // 送信用関数を追加
     const handleSendPosts = async (e) => {
         e.preventDefault(); 
@@ -25,7 +26,9 @@ export default function Edit(props) {
     }
 
     const handleSendLike = () => {
-        router.post(`/layouts/${layout.id}/like`);
+        if(like){
+            router.post(`/layouts/${layout.id}/like`);
+        }
     }
     return (
         <MainLayout user={props.auth.user}>
