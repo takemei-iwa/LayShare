@@ -15,14 +15,6 @@ const createLayoutData = async (iframeBody, html, css) => {
     };  
 };
 
-export const handleGuest = (user) => {
-    if(!user) { 
-        router.get("/register");
-        return true;
-    }
-    return false;
-}
-
 const handleLayoutSave = async (iframeBody, html, css) => {
     return await createLayoutData(iframeBody, html, css);
 }
