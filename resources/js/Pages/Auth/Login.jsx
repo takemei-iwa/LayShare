@@ -91,6 +91,14 @@ export default function Login({ status, canResetPassword }) {
                         Log in
                     </PrimaryButton>
                 </div>
+                <div class="flex">
+                    <Link
+                                href={route('register')}
+                                className="underline text-sm text-blue-400 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            >
+                                Need an account?
+                    </Link>
+                </div>
             </form>
         </UserForm>
     );
