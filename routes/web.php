@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 use App\Http\Controllers\LayoutController;
+use App\Http\Controllers\LikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,9 @@ Route::post('/layouts/create', [LayoutController::class, 'store']
 Route::get('/layouts/{layout}', [LayoutController::class, 'edit'])->name('layout.edit');
 Route::put('/layouts/{layout}', [LayoutController::class, 'store']
     )->name('layout.update')->middleware('auth');
+    
+Route::post('/layouts/{layout}/like', [LikeController::class, 'store']
+    )->middleware('auth');    
 
 //*****ここからデフォルトのルーティング*****/
 

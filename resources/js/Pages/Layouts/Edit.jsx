@@ -23,9 +23,14 @@ export default function Edit(props) {
             router.post("/layouts/create", data);
         }                
     }
+
+    const handleSendLike = () => {
+        router.post(`/layouts/${layout.id}/like`);
+    }
     return (
         <MainLayout user={props.auth.user}>
-            <button type="submit" onClick={handleSendPosts}>保存</button>                            
+            <button type="submit" onClick={handleSendPosts}>保存</button>   
+            <button type="submit" onClick={handleSendLike}>いいね</button>                         
             <Editor html={html} css={css} 
                 onHtmlChange={setHtml} onCssChange={setCss} />            
             <Preview html={html} css={css}
