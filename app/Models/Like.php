@@ -26,6 +26,9 @@ class Like extends Model
     
     public static function isLiked(Layout $layout) {        
         // dd(Auth::user()->id . " " . $layout->id);
+        if(!Auth::user()) { 
+            return false;
+        }
         return Like::where([
             ['user_id', '=', Auth::user()->id],
             ['layout_id', '=', $layout->id],
