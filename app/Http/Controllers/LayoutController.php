@@ -39,9 +39,9 @@ class LayoutController extends Controller
             "initialLikesCount" => Like::getLikesCount($layout),
         ]);
     }
-    public function getUserLayouts(User $user){
-        return Inertia::render('Layouts/UserLayouts', [
-            "layouts" => $user->likedLayouts(),
+    public function getLikedLayouts(){
+        return Inertia::render('Layouts/LikedLayouts', [
+            "layouts" => Auth::user()->likedLayouts(),
         ]);
     }
     private function uploadFile($fileName, $file, $storage_path){
