@@ -34,4 +34,10 @@ class Like extends Model
             ['layout_id', '=', $layout->id],
         ])->exists();
     }
+    public static function getLikesCount(Layout $layout) {        
+        // dd(Auth::user()->id . " " . $layout->id);        
+        return Like::where([
+            ['layout_id', '=', $layout->id],
+        ])->count();
+    }
 }

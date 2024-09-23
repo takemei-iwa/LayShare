@@ -35,6 +35,7 @@ class LayoutController extends Controller
         return Inertia::render('Layouts/Edit', [
             "layout" => $layoutData,
             "isLiked" => Like::isLiked($layout),
+            "initialLikesCount" => Like::getLikesCount($layout),
         ]);
     }
     private function uploadFile($fileName, $file, $storage_path){

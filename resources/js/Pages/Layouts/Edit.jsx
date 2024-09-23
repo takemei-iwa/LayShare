@@ -8,14 +8,15 @@ import Preview from "../../Components/Layouts/Preview";
 import handleLayoutSave, { handleGuest } from "@/Functions/Layouts/handleLayoutSave";
 
 export default function Edit(props) {
-    const { layout, isLiked } = props;
+    const { layout, isLiked, initialLikesCount} = props;
     const isOwner = props.auth.user && props.auth.user.id === layout.user_id;
     const [html, setHtml] = useState(layout.html);
     const [css, setCss] = useState(layout.css);
     const [iframeDoc, setIframeDoc] = useState('');
     const [like, setLike] = useState(isLiked);
     const [buttonState, setButtonState] = useState(isLiked);
-    console.log("like : ",like);
+    const [likesCount, setLikesCount] = useState(initialLikesCount);
+    console.log("likesCount : ",likesCount);
     // 送信用関数を追加
     const handleSendPosts = async (e) => {
         e.preventDefault();
@@ -49,11 +50,13 @@ export default function Edit(props) {
         const url = `/layouts/${layout.id}/like`;
         setButtonState(!buttonState);
         if (like) {
+            setLikesCount(likesCount-1);
             const success = await sendLikeRequest('delete', url);
             if (success) {
                 setLike(false);
             }
         } else {
+            setLikesCount(likesCount+1);
             const success = await sendLikeRequest('post', url);
             if (success) {
                 setLike(true);
@@ -64,6 +67,7 @@ export default function Edit(props) {
     return (
         <MainLayout user={props.auth.user}>
             <button type="submit" onClick={handleSendPosts}>保存</button>
+            <div class="flex">
             <button type="submit" class=
                 {buttonState ? 
                     "bg-blue-700 text-white border border-blue-700 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center hover:ring-4 hover:outline-none hover:ring-blue-300"
@@ -75,6 +79,8 @@ export default function Edit(props) {
                 </svg>
                 <span class="sr-only">Icon description</span>
             </button>
+            <p class="p-2">{likesCount}</p>
+            </div>
             <Editor html={html} css={css}
                 onHtmlChange={setHtml} onCssChange={setCss} />
             <Preview html={html} css={css}
