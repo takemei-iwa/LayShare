@@ -36,7 +36,9 @@ Route::post('/layouts/{layout}/like', [LikeController::class, 'store']
 Route::delete('/layouts/{layout}/like', [LikeController::class, 'destroy']
     )->middleware('auth');
 
-Route::get('/users/liked-layouts', [LayoutController::class, 'getLikedLayouts'])->name('user.likedLayouts')
+Route::get('/user/layouts', [LayoutController::class, 'getUserLayouts'])->name('user.layouts')
+    ->middleware('auth');    
+Route::get('/user/liked-layouts', [LayoutController::class, 'getLikedLayouts'])->name('user.likedLayouts')
     ->middleware('auth');    
 
 //*****ここからデフォルトのルーティング*****/
