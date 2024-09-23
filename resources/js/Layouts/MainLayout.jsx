@@ -83,7 +83,7 @@ export default function MainLayout({ user, header, children }) {
                                     New Layout
                                 </NavLink>
                                 <NavLink href={route('user.layouts', { user: 1 })} active={route().current('user.layouts')}>
-                                    Your Work
+                                    Favorites
                                 </NavLink>
                             </div>
                         </div>
@@ -135,7 +135,7 @@ export default function MainLayout({ user, header, children }) {
                             New Layout
                         </ResponsiveNavLink>
                         <ResponsiveNavLink href={route('user.layouts', { user: 1 })} active={route().current('user.layouts')}>
-                            Your Work
+                            Favorites
                         </ResponsiveNavLink>
                     </div>
 
