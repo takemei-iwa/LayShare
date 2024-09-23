@@ -53,6 +53,11 @@ class User extends Authenticatable
         return $this->hasMany(Like::class);  
     }
 
+    public function layouts()   
+    {
+        return $this->hasMany(Layout::class);  
+    }
+
     public function likedLayouts()
     {   
         $likes = Like::whereBelongsTo($this)->get();
