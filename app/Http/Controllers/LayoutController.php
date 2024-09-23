@@ -10,6 +10,7 @@ use Inertia\Inertia;
 
 use App\Models\Layout;
 use App\Models\Like;
+use App\Models\User;
 
 use Cloudinary;
 
@@ -36,6 +37,11 @@ class LayoutController extends Controller
             "layout" => $layoutData,
             "isLiked" => Like::isLiked($layout),
             "initialLikesCount" => Like::getLikesCount($layout),
+        ]);
+    }
+    public function getUserLayouts(User $user){
+        return Inertia::render('Layouts/UserLayouts', [
+            "layouts" => $user->likedLayouts(),
         ]);
     }
     private function uploadFile($fileName, $file, $storage_path){
