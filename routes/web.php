@@ -23,12 +23,12 @@ Route::get('/', function () {
 
 // Route::get('/layouts', [LayoutController::class, 'index'])->name('index');   
 Route::get('/layouts', [LayoutController::class, 'index'])->name('index');
-Route::get('/layouts/create', [LayoutController::class, 'create'])->name('create');   
+Route::get('/layouts/create', [LayoutController::class, 'create'])->name('layout.create');   
 Route::post('/layouts/create', [LayoutController::class, 'store']
-    )->name('layouts.store')->middleware('auth');
-Route::get('/layouts/{layout}', [LayoutController::class, 'edit'])->name('layouts.edit');
+    )->name('layout.store')->middleware('auth');
+Route::get('/layouts/{layout}', [LayoutController::class, 'edit'])->name('layout.edit');
 Route::put('/layouts/{layout}', [LayoutController::class, 'store']
-    )->name('layouts.update')->middleware('auth');
+    )->name('layout.update')->middleware('auth');
 
 //*****ここからデフォルトのルーティング*****/
 

@@ -79,6 +79,9 @@ export default function MainLayout({ user, header, children }) {
                                 <NavLink href={route('index')} active={route().current('index')}>
                                     Layouts
                                 </NavLink>
+                                <NavLink href={route('layout.create')} active={route().current('layout.create')}>
+                                    Layouts
+                                </NavLink>
                             </div>
                         </div>
 
@@ -122,9 +125,12 @@ export default function MainLayout({ user, header, children }) {
 
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                     <div className="pt-2 pb-3 space-y-1">
-                        {/* <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            Dashboard
-                        </ResponsiveNavLink> */}
+                        <ResponsiveNavLink href={route('index')} active={route().current('index')}>
+                            Layouts
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('layout.create')} active={route().current('layout.create')}>
+                            New Layout
+                        </ResponsiveNavLink>
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
