@@ -80,7 +80,7 @@ export default function MainLayout({ user, header, children }) {
                                     Layouts
                                 </NavLink>
                                 <NavLink href={route('layout.create')} active={route().current('layout.create')}>
-                                    Layouts
+                                    New Layout
                                 </NavLink>
                             </div>
                         </div>
