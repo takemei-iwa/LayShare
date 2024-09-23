@@ -85,6 +85,9 @@ export default function MainLayout({ user, header, children }) {
                                 <NavLink href={route('user.likedLayouts')} active={route().current('user.likedLayouts')}>
                                     Favorites
                                 </NavLink>
+                                <NavLink href={route('user.layouts')} active={route().current('user.layouts')}>
+                                    Your Work
+                                </NavLink>
                             </div>
                         </div>
 
@@ -136,6 +139,9 @@ export default function MainLayout({ user, header, children }) {
                         </ResponsiveNavLink>
                         <ResponsiveNavLink href={route('user.likedLayouts')} active={route().current('user.likedLayouts')}>
                             Favorites
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('user.layouts')} active={route().current('user.layouts')}>
+                            Your Work
                         </ResponsiveNavLink>
                     </div>
 

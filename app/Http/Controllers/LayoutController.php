@@ -44,6 +44,11 @@ class LayoutController extends Controller
             "layouts" => Auth::user()->likedLayouts(),
         ]);
     }
+    public function getUserLayouts(){
+        return Inertia::render('Layouts/UserLayouts', [
+            "layouts" => Auth::user()->layouts()->get(),
+        ]);
+    }
     private function uploadFile($fileName, $file, $storage_path){
         Storage::disk('public')->put('tmp/' . $fileName, $file);
         $uploadedFileUrl = Cloudinary::uploadFile($storage_path . '/' . $fileName)->getSecurePath();
