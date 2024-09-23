@@ -39,8 +39,8 @@ class LayoutController extends Controller
             "initialLikesCount" => Like::getLikesCount($layout),
         ]);
     }
-    public function getUserLayouts(User $user){
-        return Inertia::render('Layouts/UserLayouts', [
+    public function getLikedLayouts(User $user){
+        return Inertia::render('Layouts/LikedLayouts', [
             "layouts" => $user->likedLayouts(),
         ]);
     }
