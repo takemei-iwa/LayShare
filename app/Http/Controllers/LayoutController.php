@@ -51,16 +51,20 @@ class LayoutController extends Controller
             "layouts" => Auth::user()->layouts()->get(),
         ]);
     }
-    
-    public function store(Request $request, Layout $layout)
-    {   
+    private function save(Request $request, Layout $layout)
+    {
         // フォームからのデータを取得
         $html = $request->input('html');
         $css = $request->input('css');
         $imageDataUrl = $request->input('image');
-        
         // ジョブをディスパッチしてバックグラウンド処理を実行
-        CloudinaryUploadJob::dispatch($html, $css, $imageDataUrl, $layout);
+        CloudinaryUploadJob::dispatch($html, $css, $imageDataUrl, $layout, Auth::user()->id, );
+    }
+    public function store(Request $request, Layout $layout)
+    {   
+        $isCreate = false;
+        $this->save($request, $layout, $isCreate);
+        
         return redirect()->back()->with('message', 'Data upload started. You will be notified once complete.');
     }
 }

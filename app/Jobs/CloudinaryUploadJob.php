@@ -23,22 +23,24 @@ class CloudinaryUploadJob implements ShouldQueue
     private $imageDataURL;
     private $html, $css;
     private $layout;
+    private $user_id;
     /**
      * Create a new job instance.
      */
-    public function __construct($html=null,$css=null,$imageDataURL, $layout)
+    public function __construct($html=null,$css=null,$imageDataURL, $layout, $user_id)
     {
         // 一時的に保存するディレクトリのパス        
         $this->html=$html;        
         // $this->css=$css;        
         $this->imageDataURL=$imageDataURL;
         $this->layout = $layout;
+        $this->user_id = $user_id;
     }
 
     private function uploadFile($fileName, $file, $storage_path){
         Storage::disk('public')->put('tmp/' . $fileName, $file);
-        $uploadedFileUrl = Cloudinary::uploadFile($storage_path . '/' . $fileName)->getSecurePath();
-        return $uploadedFileUrl;
+        $uploadedFileURL = Cloudinary::uploadFile($storage_path . '/' . $fileName)->getSecurePath();
+        return $uploadedFileURL;
     }
     private function uploadImage($imageDataURL, $storage_path){
         $parts = explode(',', $imageDataURL);
@@ -56,9 +58,9 @@ class CloudinaryUploadJob implements ShouldQueue
 
         // 画像をストレージに保存
         Storage::disk('public')->put('tmp/' . $imgName, $data);
-        $uploadedImageUrl = Cloudinary::upload($storage_path . '/' . $imgName)->getSecurePath();
+        $uploadedImageURL = Cloudinary::upload($storage_path . '/' . $imgName)->getSecurePath();
 
-        return $uploadedImageUrl;
+        return $uploadedImageURL;
     }
     
     /**
@@ -68,23 +70,28 @@ class CloudinaryUploadJob implements ShouldQueue
     {
         Log::debug("Called CloudinaryUploadJob");
         $storage_path = Storage::disk('public')->path('tmp');
+        $uploadedHtmlURL="";
         if ($this->html !== null) {
             $htmlName = uniqid() . '.html';
-            $uploadedHtmlUrl = $this->uploadFile($htmlName, $this->html, $storage_path);
+            $uploadedHtmlURL = $this->uploadFile($htmlName, $this->html, $storage_path);
         } 
-        Log::debug("uploadhtml : {$uploadedHtmlUrl}");
-        // if ($css !== null) {
-        //     $cssName = uniqid() . '.css';
-        //     $uploadedCssUrl = $this->uploadFile($cssName, $this->css, $storage_path);
-        // }
-        // $uploadedImageUrl = $this->uploadImage($this->imageDataUrl, $storage_path);
-        // // uploadしたurlを返す
-        // $input = [
-        //     'html' => $uploadedHtmlUrl,
-        //     'css' => $uploadedCssUrl,
-        //     'thumbnail' => $uploadedImageUrl,
-        //     'user_id' => Auth::user()->id,
-        // ];        
-        // $this->layout->fill($input)->save();
+        
+        $uploadedCssURL="";
+        if ($this->css !== null) {
+            $cssName = uniqid() . '.css';
+            $uploadedCssURL = $this->uploadFile($cssName, $this->css, $storage_path);
+        }
+        
+        $uploadedImageURL = $this->uploadImage($this->imageDataURL, $storage_path);
+        
+        // uploadしたuRLを返す
+        $input = [
+            'html' => $uploadedHtmlURL,
+            'css' => $uploadedCssURL,
+            'thumbnail' => $uploadedImageURL,
+            'user_id' => $this->user_id,
+        ];        
+        $this->layout->fill($input)->save();
+        Log::debug("complete upload");
     }
 }
