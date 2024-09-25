@@ -24,17 +24,21 @@ class CloudinaryUploadJob implements ShouldQueue
     private $html, $css;
     private $layout;
     private $user_id;
+    private $isStore;
     /**
      * Create a new job instance.
      */
-    public function __construct($html=null,$css=null,$imageDataURL, $layout, $user_id)
+    public function __construct($html=null,$css=null,$imageDataURL, ?Layout $layout, $user_id, $isStore)
     {
         // 一時的に保存するディレクトリのパス        
         $this->html=$html;        
-        // $this->css=$css;        
+        $this->css=$css;        
         $this->imageDataURL=$imageDataURL;
-        $this->layout = $layout;
         $this->user_id = $user_id;
+        $this->isStore = $isStore;
+        if(!$this->isStore){
+            $this->layout = $layout;
+        }
     }
 
     private function uploadFile($fileName, $file, $storage_path){
@@ -68,7 +72,7 @@ class CloudinaryUploadJob implements ShouldQueue
      */
     public function handle(): void
     {
-        Log::debug("Called CloudinaryUploadJob");
+        Log::debug("Called CloudinaryUploadJob. isStore : {$this->isStore}");
         $storage_path = Storage::disk('public')->path('tmp');
         $uploadedHtmlURL="";
         if ($this->html !== null) {
@@ -90,8 +94,14 @@ class CloudinaryUploadJob implements ShouldQueue
             'css' => $uploadedCssURL,
             'thumbnail' => $uploadedImageURL,
             'user_id' => $this->user_id,
-        ];        
-        $this->layout->fill($input)->save();
+        ];
+        if($this->isStore){
+            Layout::create($input);
+            Log::debug("layout create comment");
+        } else {
+            Log::debug("layout fill comment");
+            $this->layout->fill($input)->save();
+        }
         Log::debug("complete upload");
     }
 }

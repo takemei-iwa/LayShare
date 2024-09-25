@@ -28,7 +28,7 @@ Route::get('/layouts/create', [LayoutController::class, 'create'])->name('layout
 Route::post('/layouts/create', [LayoutController::class, 'store']
     )->name('layout.store')->middleware('auth');
 Route::get('/layouts/{layout}', [LayoutController::class, 'edit'])->name('layout.edit');
-Route::put('/layouts/{layout}', [LayoutController::class, 'store']
+Route::put('/layouts/{layout}', [LayoutController::class, 'update']
     )->name('layout.update')->middleware('auth');
     
 Route::post('/layouts/{layout}/like', [LikeController::class, 'store']
