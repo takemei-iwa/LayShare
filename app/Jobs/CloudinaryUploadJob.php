@@ -97,11 +97,9 @@ class CloudinaryUploadJob implements ShouldQueue
         ];
         if($this->isStore){
             Layout::create($input);
-            Log::debug("layout create comment");
         } else {
-            Log::debug("layout fill comment");
             $this->layout->fill($input)->save();
         }
-        Log::debug("complete upload");
+        Log::debug("Complete CloudinaryUploadJob");
     }
 }
