@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 
 use App\Models\Layout;
 
+use App\Events\UploadCompleted;
 
 use Cloudinary;
 
@@ -101,5 +102,6 @@ class CloudinaryUploadJob implements ShouldQueue
             $this->layout->fill($input)->save();
         }
         Log::debug("Complete CloudinaryUploadJob");
+        event(new UploadCompleted($this->user_id));
     }
 }
