@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
@@ -61,7 +61,23 @@ function SignUpInLink() {
 export default function MainLayout({ user, header, children }) {
     console.log(user);
     const isLoggedIn = user !== null;
+    useEffect(() => {
+        // プライベートチャンネルでジョブ完了イベントをリッスン
+        window.Echo.channel('chat')
+    .listen('UploadCompleted', (e) => {
+        console.log("chat get");
+    });
+    // Echo.private(`user.${user.id}`)
+    //         .listen('UploadCompleted', (e) => {
+    //             // setNotification(e.message); // 受信したメッセージを保存
+    //             console.log("broadcast"); // ポップアップで表示
+    //         });
 
+        // コンポーネントがアンマウントされる時にクリーンアップ
+        // return () => {
+        //     channel.stopListening('JobCompleted');
+        // };
+    }, []);
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
     return (
         <div className="min-h-screen bg-gray-100">
