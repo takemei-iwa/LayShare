@@ -4,6 +4,7 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
+import Notify from '@/Components/Layouts/Notify';
 
 function ProfileDropDown({ user }) {
     return (
@@ -63,11 +64,11 @@ export default function MainLayout({ user, header, children }) {
     const isLoggedIn = user !== null;
     useEffect(() => {
         // プライベートチャンネルでジョブ完了イベントをリッスン
-    //     window.Echo.channel('chat')
-    // .listen('UploadCompleted', (e) => {
-    //     console.log("chat get");
-    // });
-    window.Echo.private(`user.${user.id}`)
+        //     window.Echo.channel('chat')
+        // .listen('UploadCompleted', (e) => {
+        //     console.log("chat get");
+        // });
+        window.Echo.private(`user.${user.id}`)
             .listen('UploadCompleted', (e) => {
                 // setNotification(e.message); // 受信したメッセージを保存
                 console.log("broadcast"); // ポップアップで表示
@@ -78,6 +79,10 @@ export default function MainLayout({ user, header, children }) {
         //     channel.stopListening('JobCompleted');
         // };
     }, []);
+    const [isOpen, setIsOpen] = useState(true);
+
+    const handleClose = () => { console.log("handleClose"); setIsOpen(false); }
+
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
     return (
         <div className="min-h-screen bg-gray-100">
@@ -91,7 +96,7 @@ export default function MainLayout({ user, header, children }) {
                                 </Link>
                             </div>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">                                
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink href={route('index')} active={route().current('index')}>
                                     Layouts
                                 </NavLink>
@@ -193,7 +198,14 @@ export default function MainLayout({ user, header, children }) {
                 </header>
             )}
 
-            <main>{children}</main>
+            <main>
+                <Notify
+                    isOpen={isOpen}
+                    onClose={handleClose}
+                    message="This is a pop-up notification!"
+                />
+                {children}
+            </main>
         </div>
     );
 }
