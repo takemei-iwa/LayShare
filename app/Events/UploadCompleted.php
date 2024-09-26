@@ -36,8 +36,7 @@ class UploadCompleted implements ShouldBroadcast
     {
         try {
             Log::debug("UploadCompleted broadcastOn");
-            // return new PrivateChannel('user.' . $this->userId);
-            return new Channel('chat');
+            return new PrivateChannel('user.' . $this->userId);
         } catch (\Exception $e) {
             Log::error('Error in broadcastOn: ' . $e->getMessage());
         }

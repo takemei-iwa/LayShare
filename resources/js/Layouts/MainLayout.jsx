@@ -63,15 +63,15 @@ export default function MainLayout({ user, header, children }) {
     const isLoggedIn = user !== null;
     useEffect(() => {
         // プライベートチャンネルでジョブ完了イベントをリッスン
-        window.Echo.channel('chat')
-    .listen('UploadCompleted', (e) => {
-        console.log("chat get");
-    });
-    // Echo.private(`user.${user.id}`)
-    //         .listen('UploadCompleted', (e) => {
-    //             // setNotification(e.message); // 受信したメッセージを保存
-    //             console.log("broadcast"); // ポップアップで表示
-    //         });
+    //     window.Echo.channel('chat')
+    // .listen('UploadCompleted', (e) => {
+    //     console.log("chat get");
+    // });
+    window.Echo.private(`user.${user.id}`)
+            .listen('UploadCompleted', (e) => {
+                // setNotification(e.message); // 受信したメッセージを保存
+                console.log("broadcast"); // ポップアップで表示
+            });
 
         // コンポーネントがアンマウントされる時にクリーンアップ
         // return () => {
