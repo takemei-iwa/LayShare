@@ -80,7 +80,7 @@ export default function MainLayout({ user, header, children }) {
         // };
     }, []);
     const [isOpen, setIsOpen] = useState(true);
-
+    const [isUploading, setIsUploading] = useState(true);
     const handleClose = () => { console.log("handleClose"); setIsOpen(false); }
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -203,6 +203,7 @@ export default function MainLayout({ user, header, children }) {
                     isOpen={isOpen}
                     onClose={handleClose}
                     message="This is a pop-up notification!"
+                    isUploading={false}
                 />
                 {children}
             </main>
