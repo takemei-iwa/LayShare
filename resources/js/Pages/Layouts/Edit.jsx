@@ -16,12 +16,11 @@ export default function Edit(props) {
     const [like, setLike] = useState(isLiked);
     const [buttonState, setButtonState] = useState(isLiked);
     const [likesCount, setLikesCount] = useState(initialLikesCount);
-    const [isUploadStarted, setIsUploadStarted] = useState(false);
     console.log("likesCount : ",likesCount);
     // 送信用関数を追加
     const handleSendPosts = async (e) => {
         e.preventDefault();
-        const data = await handleLayoutSave(iframeDoc.body, html, css, setIsUploadStarted);
+        const data = await handleLayoutSave(iframeDoc.body, html, css);
         if (isOwner) {
             router.put(`/layouts/${layout.id}`, data)
         } else {
@@ -66,7 +65,7 @@ export default function Edit(props) {
     };
 
     return (
-        <MainLayout user={props.auth.user} isUploadStarted={isUploadStarted}>
+        <MainLayout user={props.auth.user}>
             <button type="submit" onClick={handleSendPosts}>保存</button>
             <div class="flex">
             <button type="submit" class=

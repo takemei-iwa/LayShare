@@ -1,12 +1,12 @@
 import React from 'react';
 
-const Notify = ({ isOpen, onClose, message, isUploading }) => {
+const Notify = ({ isOpen, onClose, message}) => {
     if (!isOpen) return null;
     return (
         <div id="default-modal" tabindex="-1" aria-hidden="false" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center p-20"
-            >
-            <div class="relative" onClick={onClose}>
-                {isUploading ? (
+        onClick={onClose}>
+            <div class="relative">
+                {/* {isUploading ? (
                     <p class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center bg-opacity-50">
                         <svg aria-hidden="true" role="status" class="inline w-4 h-4 me-3 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB" />
@@ -14,7 +14,7 @@ const Notify = ({ isOpen, onClose, message, isUploading }) => {
                         </svg>
                         Uploading...
                     </p>
-                ) : (
+                ) : ( */}
                     <p class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center bg-opacity-50">
                             <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
                     <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -23,7 +23,7 @@ const Notify = ({ isOpen, onClose, message, isUploading }) => {
                     Uploaded!
                 </span>
                 </p>
-                )}
+                {/* )} */}
             </div>
         </div>
     );
