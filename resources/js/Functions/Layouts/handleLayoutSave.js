@@ -15,7 +15,8 @@ const createLayoutData = async (iframeBody, html, css) => {
     };  
 };
 
-const handleLayoutSave = async (iframeBody, html, css) => {
+const handleLayoutSave = async (iframeBody, html, css, setIsUploadStarted) => {
+    setIsUploadStarted(true);
     return await createLayoutData(iframeBody, html, css);
 }
 

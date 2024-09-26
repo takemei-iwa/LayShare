@@ -59,11 +59,14 @@ function SignUpInLink() {
         </>
     );
 }
-export default function MainLayout({ user, header, children }) {
+export default function MainLayout({ user, header, children, isUploadStarted }) {
     console.log(user);
     const isLoggedIn = user !== null;
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(isUploadStarted || false);
     const [isUploading, setIsUploading] = useState(true);
+    useEffect(() => {
+        setIsOpen(isUploadStarted);
+    }, [isUploadStarted])
     useEffect(() => {
         // プライベートチャンネルでジョブ完了イベントをリッスン
         //     window.Echo.channel('chat')
