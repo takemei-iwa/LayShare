@@ -3,7 +3,7 @@ import React from 'react';
 const Notify = ({ isOpen, onClose, message, isUploading }) => {
     if (!isOpen) return null;
     return (
-        <div id="default-modal" tabindex="-1" aria-hidden="true" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full "
+        <div id="default-modal" tabindex="-1" aria-hidden="false" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full "
             onClick={onClose}>
             <div class="relative p-10 w-full max-w-2xl max-h-full ">
                 {isUploading ? (

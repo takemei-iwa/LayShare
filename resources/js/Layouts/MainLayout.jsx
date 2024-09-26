@@ -62,6 +62,8 @@ function SignUpInLink() {
 export default function MainLayout({ user, header, children }) {
     console.log(user);
     const isLoggedIn = user !== null;
+    const [isOpen, setIsOpen] = useState(true);
+    const [isUploading, setIsUploading] = useState(true);
     useEffect(() => {
         // プライベートチャンネルでジョブ完了イベントをリッスン
         //     window.Echo.channel('chat')
@@ -72,6 +74,8 @@ export default function MainLayout({ user, header, children }) {
             .listen('UploadCompleted', (e) => {
                 // setNotification(e.message); // 受信したメッセージを保存
                 console.log("broadcast"); // ポップアップで表示
+                setIsOpen(true);
+                setIsUploading(false);
             });
 
         // コンポーネントがアンマウントされる時にクリーンアップ
@@ -79,8 +83,7 @@ export default function MainLayout({ user, header, children }) {
         //     channel.stopListening('JobCompleted');
         // };
     }, []);
-    const [isOpen, setIsOpen] = useState(true);
-    const [isUploading, setIsUploading] = useState(true);
+    
     const handleClose = () => { console.log("handleClose"); setIsOpen(false); }
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -203,7 +206,7 @@ export default function MainLayout({ user, header, children }) {
                     isOpen={isOpen}
                     onClose={handleClose}
                     message="This is a pop-up notification!"
-                    isUploading={false}
+                    isUploading={isUploading}
                 />
                 {children}
             </main>
