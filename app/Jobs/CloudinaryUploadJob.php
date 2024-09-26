@@ -42,29 +42,23 @@ class CloudinaryUploadJob implements ShouldQueue
         }
     }
 
+    private function deleteFile($path){
+        if (Storage::disk('public')->exists($path)) {
+            Log::debug("delete file path : " . $path);
+            Storage::disk('public')->delete($path);            
+        } else {
+            Log::error("Error : uploadedFile doesnt exist. path : " . $path);
+        }
+    }
     private function uploadFile($fileName, $file, $storage_path){
         Storage::disk('public')->put('tmp/' . $fileName, $file);
-        $uploadedFileURL = Cloudinary::uploadFile($storage_path . '/' . $fileName)->getSecurePath();
+        $path = $storage_path . '/' . $fileName;
+        $uploadedFileURL = Cloudinary::uploadFile($path)->getSecurePath();
+        $this->deleteFile('tmp/' . $fileName);
         return $uploadedFileURL;
     }
     private function uploadImage($imageDataURL, $storage_path){
-        $parts = explode(',', $imageDataURL);
-        $data = isset($parts[1]) ? $parts[1] : null;
-
-        if ($data === null) {
-            return response()->json(['error' => 'No image data provided'], 400);
-        }
-
-        // Base64デコード
-        $data = base64_decode($data);
-
-        // ファイル名を生成
-        $imgName = uniqid() . '.png'; 
-
-        // 画像をストレージに保存
-        Storage::disk('public')->put('tmp/' . $imgName, $data);
-        $uploadedImageURL = Cloudinary::upload($storage_path . '/' . $imgName)->getSecurePath();
-
+        $uploadedImageURL = Cloudinary::upload($imageDataURL)->getSecurePath();
         return $uploadedImageURL;
     }
     
