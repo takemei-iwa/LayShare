@@ -69,12 +69,14 @@ export default function MainLayout({ user, header, children }) {
         // .listen('UploadCompleted', (e) => {
         //     console.log("chat get");
         // });
+        if(isLoggedIn){
         window.Echo.private(`user.${user.id}`)
             .listen('UploadCompleted', (e) => {
                 // setNotification(e.message); // 受信したメッセージを保存
                 console.log("broadcast"); // ポップアップで表示
                 setIsOpen(true);
             });
+        }
 
         // コンポーネントがアンマウントされる時にクリーンアップ
         // return () => {
