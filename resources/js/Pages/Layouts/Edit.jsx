@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import { router } from '@inertiajs/react'
 import axios from 'axios';
 import MainLayout from "@/Layouts/MainLayout";
@@ -16,6 +16,7 @@ export default function Edit(props) {
     const [like, setLike] = useState(isLiked);
     const [buttonState, setButtonState] = useState(isLiked);
     const [likesCount, setLikesCount] = useState(initialLikesCount);
+    const likeProcessing = useRef(false);
     console.log("likesCount : ",likesCount);
     // 送信用関数を追加
     const handleSendPosts = async (e) => {
@@ -48,20 +49,23 @@ export default function Edit(props) {
     const handleSendLike = async (e) => {
         e.preventDefault();
         const url = `/layouts/${layout.id}/like`;
+        if(likeProcessing.current) return;
+        likeProcessing.current = true;
         setButtonState(!buttonState);
         if (like) {
-            setLikesCount(likesCount-1);
+            setLikesCount(count => count - 1);
             const success = await sendLikeRequest('delete', url);
             if (success) {
                 setLike(false);
             }
         } else {
-            setLikesCount(likesCount+1);
+            setLikesCount(count => count + 1);
             const success = await sendLikeRequest('post', url);
             if (success) {
                 setLike(true);
             }
         }
+        likeProcessing.current = false;
     };
 
     return (
